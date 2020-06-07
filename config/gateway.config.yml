@@ -1,0 +1,134 @@
+http:
+  port: 8080
+admin:
+  port: 9876
+  host: localhost
+apiEndpoints:
+  # see: http://www.express-gateway.io/docs/configuration/gateway.config.yml/apiEndpoints
+  customerApi:
+    host: '*'
+    paths: '/api/customers/*'
+  vehicleApi:
+    host: '*'
+    paths: '/api/vehicles/*'
+  driverApi:
+    host: '*'
+    paths: '/api/drivers/*'
+  incidentApi:
+    host: '*'
+    paths: '/api/incidents/*'
+  rateApi:
+    host: '*'
+    paths: '/api/rate_issue/rate/*'
+  issueApi:
+    host: '*'
+    paths: '/api/rate_issue/issue/*'
+serviceEndpoints:
+  # see: http://www.express-gateway.io/docs/configuration/gateway.config.yml/serviceEndpoints
+  customerSvc:
+    url: "http://localhost:3000"
+  vehicleSvc:
+    url: "http://localhost:3001"
+  driverSvc:
+    url: "http://localhost:3002"
+  incidentSvc:
+    url: "http://localhost:3003"
+  rateSvc:
+    url: "http://localhost:3004"
+  issueSvc:
+    url: "http://localhost:3005"
+policies:
+  - basic-auth
+  - cors
+  - expression
+  - key-auth
+  - log
+  - oauth2
+  - proxy
+  - rate-limit
+pipelines:
+  # see: https://www.express-gateway.io/docs/configuration/gateway.config.yml/pipelines
+  customer:
+    apiEndpoints:
+      - customerApi
+    policies:
+      -
+        cors:
+          -
+            action:
+              origin: true
+      -
+        proxy:
+          - 
+            action:
+              serviceEndpoint: customerSvc
+  vehicle:
+    apiEndpoints:
+      - vehicleApi
+    policies:
+      -
+        cors:
+          -
+            action:
+              origin: true
+      -
+        proxy:
+          - 
+            action:
+              serviceEndpoint: vehicleSvc
+  driver:
+    apiEndpoints:
+      - driverApi
+    policies:
+      -
+        cors:
+          -
+            action:
+              origin: true
+      -
+        proxy:
+          - 
+            action:
+              serviceEndpoint: driverSvc
+  incident:
+    apiEndpoints:
+      - incidentApi
+    policies:
+      -
+        cors:
+          -
+            action:
+              origin: true
+      -
+        proxy:
+          - 
+            action:
+              serviceEndpoint: incidentSvc
+  rate:
+    apiEndpoints:
+      - rateApi
+    policies:
+      -
+        cors:
+          -
+            action:
+              origin: true
+      -
+        proxy:
+          - 
+            action:
+              serviceEndpoint: rateSvc
+  issue:
+    apiEndpoints:
+      - issueApi
+    policies:
+      -
+        cors:
+          -
+            action:
+              origin: true
+      -
+        proxy:
+          - 
+            action:
+              serviceEndpoint: issueSvc
