@@ -26,17 +26,17 @@ apiEndpoints:
 serviceEndpoints:
   # see: http://www.express-gateway.io/docs/configuration/gateway.config.yml/serviceEndpoints
   customerSvc:
-    url: "http://localhost:3000"
+    url: "http://customer-info-api-development.apps.openshift.ne-innovation.com"
   vehicleSvc:
-    url: "http://localhost:3001"
+    url: "http://vehicles-api-development.apps.openshift.ne-innovation.com"
   driverSvc:
-    url: "http://localhost:3002"
+    url: "http://drivers-api-development.apps.openshift.ne-innovation.com"
   incidentSvc:
-    url: "http://localhost:3003"
+    url: "http://incidents-api-development.apps.openshift.ne-innovation.com"
   rateSvc:
-    url: "http://localhost:3004"
+    url: "http://rate-api-development.apps.openshift.ne-innovation.com"
   issueSvc:
-    url: "http://localhost:3005"
+    url: "http://issue-api-development.apps.openshift.ne-innovation.com"
 policies:
   - basic-auth
   - cors
