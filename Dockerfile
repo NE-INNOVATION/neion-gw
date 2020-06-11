@@ -16,4 +16,4 @@ RUN npm ci
 COPY . .
 
 EXPOSE 8080
-CMD ["node","bin/server.js"]
+CMD ["node","server.js"]
