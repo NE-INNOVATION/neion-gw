@@ -23,6 +23,9 @@ apiEndpoints:
   issueApi:
     host: '*'
     paths: '/api/rate_issue/issue/*'
+  inquiryApi:
+    host: '*'
+    paths: '/api/policyinquiry/*'
 serviceEndpoints:
   # see: http://www.express-gateway.io/docs/configuration/gateway.config.yml/serviceEndpoints
   customerSvc:
@@ -37,6 +40,8 @@ serviceEndpoints:
     url: "http://rate-api-development.apps.openshift.ne-innovation.com"
   issueSvc:
     url: "http://issue-api-development.apps.openshift.ne-innovation.com"
+  inquirySvc:
+    url: "http://policy-inquiry-api-development.apps.azureocp.neinnovation-ocp.com"
 policies:
   - basic-auth
   - cors
@@ -132,3 +137,17 @@ pipelines:
           - 
             action:
               serviceEndpoint: issueSvc
+  inquiry:
+    apiEndpoints:
+      - inquiryApi
+    policies:
+      -
+        cors:
+          -
+            action:
+              origin: true
+      -
+        proxy:
+          - 
+            action:
+              serviceEndpoint: inquirySvc
