@@ -26,6 +26,9 @@ apiEndpoints:
   newIssueApi:
     host: "*"
     paths: "/gateway/policy/issue/*"
+  inquiryApi:
+    host: "*"
+    paths: "/gateway/policy/inquiry/*"
 serviceEndpoints:
   # see: http://www.express-gateway.io/docs/configuration/gateway.config.yml/serviceEndpoints
   customerSvc:
@@ -42,6 +45,8 @@ serviceEndpoints:
     url: "http://istio-ingressgateway-istiosystem.apps.openshift.ne-innovation.com"
   newIssueSvc:
     url: "http://istio-ingressgateway-istiosystem.apps.openshift.ne-innovation.com"
+  inquirySvc:
+    url: "http://istio-ingressgateway-istio-system.apps.azureocp.neinnovation-ocp.com"
 policies:
   - basic-auth
   - cors
@@ -144,3 +149,16 @@ pipelines:
       - proxy:
           - action:
               serviceEndpoint: newIssueSvc
+  inquirySvc:
+    apiEndpoints:
+      - inquiryApi
+    policies:
+      - cors:
+          - action:
+              origin: true
+      - expression:
+          - action:
+              jscode: 'req.url = req.url.replace("/gateway","");'
+      - proxy:
+          - action:
+              serviceEndpoint: inquirySvc
