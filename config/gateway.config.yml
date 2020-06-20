@@ -6,43 +6,42 @@ admin:
 apiEndpoints:
   # see: http://www.express-gateway.io/docs/configuration/gateway.config.yml/apiEndpoints
   customerApi:
-    host: '*'
-    paths: '/api/customers/*'
+    host: "*"
+    paths: "/gateway/api/customers/*"
   vehicleApi:
-    host: '*'
-    paths: '/api/vehicles/*'
+    host: "*"
+    paths: "/gateway/api/vehicles/*"
   driverApi:
-    host: '*'
-    paths: '/api/drivers/*'
+    host: "*"
+    paths: "/gateway/api/drivers/*"
   incidentApi:
-    host: '*'
-    paths: '/api/incidents/*'
+    host: "*"
+    paths: "/gateway/api/incidents/*"
   rateApi:
-    host: '*'
-    paths: '/api/rate_issue/rate/*'
+    host: "*"
+    paths: "/gateway/api/rate_issue/rate/*"
   issueApi:
-    host: '*'
-    paths: '/api/rate_issue/issue/*'
-  inquiryApi:
-    host: '*'
-    paths: '/api/policy/PolicyInquiry/*'
+    host: "*"
+    paths: "/gateway/api/rate_issue/issue/*"
+  newIssueApi:
+    host: "*"
+    paths: "/gateway/policy/issue/*"
 serviceEndpoints:
   # see: http://www.express-gateway.io/docs/configuration/gateway.config.yml/serviceEndpoints
   customerSvc:
-    url: "http://customer-info-api-development.apps.openshift.ne-innovation.com"
+    url: "http://istio-ingressgateway-istiosystem.apps.openshift.ne-innovation.com"
   vehicleSvc:
-    url: "http://vehicles-api-development.apps.openshift.ne-innovation.com"
+    url: "http://istio-ingressgateway-istiosystem.apps.openshift.ne-innovation.com"
   driverSvc:
-    url: "http://drivers-api-development.apps.openshift.ne-innovation.com"
+    url: "http://istio-ingressgateway-istiosystem.apps.openshift.ne-innovation.com"
   incidentSvc:
-
-    url: "http://incidents-api-development.apps.openshift.ne-innovation.com"
+    url: "http://istio-ingressgateway-istiosystem.apps.openshift.ne-innovation.com"
   rateSvc:
-    url: "http://rate-api-development.apps.openshift.ne-innovation.com"
+    url: "http://istio-ingressgateway-istiosystem.apps.openshift.ne-innovation.com"
   issueSvc:
-    url: "http://issue-api-development.apps.openshift.ne-innovation.com"
-  inquirySvc:
-    url: "http://policy-inquiry-api-development.apps.azureocp.neinnovation-ocp.com/gateway"
+    url: "http://istio-ingressgateway-istiosystem.apps.openshift.ne-innovation.com"
+  newIssueSvc:
+    url: "http://istio-ingressgateway-istiosystem.apps.openshift.ne-innovation.com"
 policies:
   - basic-auth
   - cors
@@ -58,97 +57,90 @@ pipelines:
     apiEndpoints:
       - customerApi
     policies:
-      -
-        cors:
-          -
-            action:
+      - cors:
+          - action:
               origin: true
-      -
-        proxy:
-          - 
-            action:
+      - expression:
+          - action:
+              jscode: 'req.url = req.url.replace("/gateway","");'
+      - proxy:
+          - action:
               serviceEndpoint: customerSvc
   vehicle:
     apiEndpoints:
       - vehicleApi
     policies:
-      -
-        cors:
-          -
-            action:
+      - cors:
+          - action:
               origin: true
-      -
-        proxy:
-          - 
-            action:
+      - expression:
+          - action:
+              jscode: 'req.url = req.url.replace("/gateway","");'
+      - proxy:
+          - action:
               serviceEndpoint: vehicleSvc
   driver:
     apiEndpoints:
       - driverApi
     policies:
-      -
-        cors:
-          -
-            action:
+      - cors:
+          - action:
               origin: true
-      -
-        proxy:
-          - 
-            action:
+      - expression:
+          - action:
+              jscode: 'req.url = req.url.replace("/gateway","");'
+      - proxy:
+          - action:
               serviceEndpoint: driverSvc
   incident:
     apiEndpoints:
       - incidentApi
     policies:
-      -
-        cors:
-          -
-            action:
+      - cors:
+          - action:
               origin: true
-      -
-        proxy:
-          - 
-            action:
+      - expression:
+          - action:
+              jscode: 'req.url = req.url.replace("/gateway","");'
+      - proxy:
+          - action:
               serviceEndpoint: incidentSvc
   rate:
     apiEndpoints:
       - rateApi
     policies:
-      -
-        cors:
-          -
-            action:
+      - cors:
+          - action:
               origin: true
-      -
-        proxy:
-          - 
-            action:
+      - expression:
+          - action:
+              jscode: 'req.url = req.url.replace("/gateway","");'
+      - proxy:
+          - action:
               serviceEndpoint: rateSvc
   issue:
     apiEndpoints:
       - issueApi
     policies:
-      -
-        cors:
-          -
-            action:
+      - cors:
+          - action:
               origin: true
-      -
-        proxy:
-          - 
-            action:
+      - expression:
+          - action:
+              jscode: 'req.url = req.url.replace("/gateway","");'
+      - proxy:
+          - action:
               serviceEndpoint: issueSvc
-  inquiry:
+  newIssueSvc:
     apiEndpoints:
-      - inquiryApi
+      - newIssueApi
     policies:
-      -
-        cors:
-          -
-            action:
+      - cors:
+          - action:
               origin: true
-      -
-        proxy:
-          - 
-            action:
-              serviceEndpoint: inquirySvc
+      - expression:
+          - action:
+              jscode: 'req.url = req.url.replace("/gateway","");'
+      - proxy:
+          - action:
+              serviceEndpoint: newIssueSvc
