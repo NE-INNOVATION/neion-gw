@@ -28,7 +28,7 @@ apiEndpoints:
     paths: "/gateway/policy/issue/*"
   inquiryApi:
     host: "*"
-    paths: "/gateway/policy/inquiry/*"
+    paths: "/gateway/api/policy/inquiry/*"
 serviceEndpoints:
   # see: http://www.express-gateway.io/docs/configuration/gateway.config.yml/serviceEndpoints
   customerSvc:
